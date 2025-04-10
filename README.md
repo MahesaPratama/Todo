@@ -1,16 +1,21 @@
-# todo
+## 📱 Todo App - Organize Your Life with Ease
 
-A new Flutter project.
+**Todo App** is a sleek Flutter-based mobile application designed to transform how you manage your daily tasks. With its clean interface and powerful functionality, you can stay organized, boost productivity, and never miss an important task again—all from the palm of your hand.
 
-## Getting Started
+## ✨ Key Features
 
-This project is a starting point for a Flutter application.
+- **📋 Task Management:** Create and remove tasks with just a few taps
+- **🔄 Status Tracking:** Easily mark tasks as completed or pending
+- **🎨 Intuitive UI/UX:** User-friendly design that makes daily task management a breeze
+- **📱 Offline Access:** Local storage ensures your tasks are always accessible, even without internet
 
-A few resources to get you started if this is your first Flutter project:
+## 🎬 See It In Action
+https://github.com/user-attachments/assets/d69bcc9e-539a-4fda-8c52-54aaddd4ea19
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 📞 Contact
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Have questions or suggestions? Feel free to reach out!
+
+---
+
+<p align="center">Made with ❤️ for better productivity</p>
