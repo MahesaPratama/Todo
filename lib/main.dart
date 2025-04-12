@@ -5,6 +5,7 @@ import 'package:todo/screen/home.dart';
 import 'package:todo/viewmodel/todo_provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 

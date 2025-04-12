@@ -17,7 +17,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final todoProvider = Provider.of<TodoProvider>(context);
-
     // Pisahkan list todo menjadi on progress dan completed
     final onProgressTodos =
         todoProvider.todos.where((todo) => !todo.isDone).toList();
@@ -25,16 +24,12 @@ class _HomePageState extends State<HomePage> {
         todoProvider.todos.where((todo) => todo.isDone).toList();
 
     return Scaffold(
-      // Hilangkan background default, ganti dengan gradient yang lembut
       body: Container(
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFFFCE8F8), // Pastel pink
-              Color(0xFFE7E2F3), // Pastel purple
-            ],
+            colors: [Color(0xFFFCE8F8), Color(0xFFE7E2F3)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -42,13 +37,11 @@ class _HomePageState extends State<HomePage> {
         child: SafeArea(
           child: Column(
             children: [
-              // Header
               Container(
                 height: 90,
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  // Anda bisa mengganti asset image ini sesuai keinginan
                   image: const DecorationImage(
                     image: AssetImage('assets/header.png'),
                     fit: BoxFit.fill,
@@ -74,7 +67,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              // Bagian konten utama
               Expanded(
                 child: SingleChildScrollView(
                   child: Padding(
@@ -91,7 +83,7 @@ class _HomePageState extends State<HomePage> {
                           style: blackTextStyle.copyWith(
                             fontWeight: FontWeight.bold,
                             fontSize: 17.sp,
-                            // Ubah warna teks sedikit lebih gelap ke ungu tua
+
                             color: const Color(0xFF5C3D6B),
                           ),
                         ),
@@ -130,18 +122,6 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         child: ListTile(
-                                          // Gunakan ungu tua atau cokelat tua untuk avatar
-                                          leading: CircleAvatar(
-                                            backgroundColor: const Color(
-                                              0xFF6B4F7C,
-                                            ),
-                                            child: Text(
-                                              todo.id,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
                                           title: Text(
                                             todo.isi,
                                             style: TextStyle(
@@ -151,14 +131,7 @@ class _HomePageState extends State<HomePage> {
                                                       ? TextDecoration
                                                           .lineThrough
                                                       : TextDecoration.none,
-                                              // Ubah warna jadi lebih gelap
                                               color: const Color(0xFF4E3A59),
-                                            ),
-                                          ),
-                                          subtitle: Text(
-                                            "Status: ${todo.isDone ? 'Selesai' : 'Belum Selesai'}",
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
                                             ),
                                           ),
                                           trailing: IconButton(
@@ -234,17 +207,6 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         child: ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: const Color(
-                                              0xFF6B4F7C,
-                                            ),
-                                            child: Text(
-                                              todo.id,
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
                                           title: Text(
                                             todo.isi,
                                             style: const TextStyle(
@@ -254,22 +216,75 @@ class _HomePageState extends State<HomePage> {
                                               color: Color(0xFF4E3A59),
                                             ),
                                           ),
-                                          subtitle: Text(
-                                            "Status: Selesai",
-                                            style: TextStyle(
-                                              color: Colors.grey[700],
-                                            ),
-                                          ),
-                                          trailing: IconButton(
-                                            icon: const Icon(
-                                              Icons.check_box,
-                                              color: Color(0xFF6B4F7C),
-                                            ),
-                                            onPressed: () {
-                                              todoProvider.toggleTodoStatus(
-                                                todo.id,
-                                              );
-                                            },
+                                          trailing: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              IconButton(
+                                                icon: const Icon(
+                                                  Icons.delete,
+                                                  color: Color(0xFF6B4F7C),
+                                                ),
+                                                onPressed: () {
+                                                  // Tampilkan dialog konfirmasi penghapusan
+                                                  showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (
+                                                          context,
+                                                        ) => AlertDialog(
+                                                          title: const Text(
+                                                            'Hapus Todo',
+                                                          ),
+                                                          content: const Text(
+                                                            'Yakin ingin menghapus todo ini?',
+                                                          ),
+                                                          actions: [
+                                                            TextButton(
+                                                              onPressed:
+                                                                  () =>
+                                                                      Navigator.of(
+                                                                        context,
+                                                                      ).pop(),
+                                                              child: const Text(
+                                                                'Batal',
+                                                              ),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                todoProvider
+                                                                    .hapusTodo(
+                                                                      todo.id,
+                                                                    );
+                                                                Navigator.of(
+                                                                  context,
+                                                                ).pop();
+                                                              },
+                                                              child: const Text(
+                                                                'Hapus',
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                  );
+                                                },
+                                              ),
+                                              IconButton(
+                                                icon: Icon(
+                                                  todo.isDone
+                                                      ? Icons.check_box
+                                                      : Icons
+                                                          .check_box_outline_blank,
+                                                  color: const Color(
+                                                    0xFF6B4F7C,
+                                                  ),
+                                                ),
+                                                onPressed: () {
+                                                  todoProvider.toggleTodoStatus(
+                                                    todo.id,
+                                                  );
+                                                },
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       );
@@ -295,7 +310,7 @@ class _HomePageState extends State<HomePage> {
                 margin: const EdgeInsets.fromLTRB(12, 0, 12, 20),
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6B4F7C), // Ungu tua
+                  color: const Color(0xFF6B4F7C),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: const [
                     BoxShadow(
@@ -310,6 +325,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: TextField(
+                        textCapitalization: TextCapitalization.words,
                         controller: catatanController,
                         style: const TextStyle(color: Colors.white),
                         decoration: const InputDecoration(
